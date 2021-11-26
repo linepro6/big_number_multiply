@@ -23,5 +23,11 @@
     <ClInclude Include="demical.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="timecalc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="multiply.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

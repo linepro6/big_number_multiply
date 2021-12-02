@@ -41,3 +41,33 @@ uint64_t nanos()
 	uint64_t ns = SEC_TO_NS((uint64_t)ts.tv_sec) + (uint64_t)ts.tv_nsec;
 	return ns;
 }
+
+void printNsTimeDelta(uint64_t ns1, uint64_t ns2)
+{
+	uint64_t ns = ns2 - ns1;
+	uint64_t us = NS_TO_US(ns);
+	if (!us)
+	{
+		printf("%llu ns", ns);
+		return;
+	}
+	uint64_t ms = NS_TO_MS(ns);
+	if (!ms)
+	{
+		printf("%llu.%.3llu us", us, ns % 1000);
+		return;
+	}
+	uint64_t sec = NS_TO_SEC(ns);
+	if (!sec)
+	{
+		printf("%llu.%.3llu ms", ms, us % 1000);
+		return;
+	}
+	uint64_t min = sec / 60;
+	if (!min)
+	{
+		printf("%llu.%.3llu s", sec, ms % 1000);
+		return;
+	}
+	printf("%llu:%.2llu", min, sec % 60);
+}

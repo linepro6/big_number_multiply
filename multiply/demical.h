@@ -2,13 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 typedef unsigned char byte;
+// 十进制大整数结构体
 typedef struct
 {
-	byte* content;
-	size_t digits;
+	byte* content;    // 字节数组，每一位占一个字节，小端存储
+	size_t digits;    // 大整数位数
 } Demical;
 
+// 大整数打印输出
 void demicalPrint(Demical* dec)
 {
 	byte* actualPtr = dec->content + dec->digits - 1;
@@ -24,6 +27,7 @@ void demicalPrint(Demical* dec)
 	}
 }
 
+// 为大整数约简掉高位的 0
 void demicalFixDigits(Demical* dec)
 {
 	if (dec->digits <= 0) return;
@@ -32,6 +36,7 @@ void demicalFixDigits(Demical* dec)
 	dec->digits = actualPtr - dec->content + 1;
 }
 
+// 大整数内存分配
 Demical* demicalInit(size_t digits, bool zeroInit)
 {
 	Demical* dec = malloc(sizeof(Demical));
@@ -49,6 +54,7 @@ Demical* demicalInit(size_t digits, bool zeroInit)
 	return dec;
 }
 
+// 大整数内存释放
 void demicalFree(Demical* dec)
 {
 	if (dec->content) {
@@ -57,6 +63,7 @@ void demicalFree(Demical* dec)
 	free(dec);
 }
 
+// 从字符串中初始化一个大整数
 Demical* demicalFromCString(char* str)
 {
 	Demical* dec = malloc(sizeof(Demical));
@@ -78,6 +85,7 @@ Demical* demicalFromCString(char* str)
 	return dec;
 }
 
+// 随机生成指定位数的大整数
 Demical* demicalRand(size_t digits)
 {
 	Demical* dec = demicalInit(digits, false);
@@ -92,4 +100,16 @@ Demical* demicalRand(size_t digits)
 	}
 	*i = rand() % 9 + 1;
 	return dec;
+}
+
+// 大整数相等比较
+bool demicalEquals(Demical* dec1, Demical* dec2)
+{
+	demicalFixDigits(dec1);
+	demicalFixDigits(dec2);
+	if (dec1->digits != dec2->digits)
+	{
+		return false;
+	}
+	return (memcmp(dec1->content, dec2->content, dec1->digits) == 0);
 }

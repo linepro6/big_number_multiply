@@ -3,6 +3,7 @@
 
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 
+// 大整数加法（带移位操作）
 Demical* demicalAdd(Demical* A, size_t aAppendZeroCount, Demical* B, size_t bAppendZeroCount)
 {
 	size_t lenA = A->digits + aAppendZeroCount;
@@ -80,6 +81,7 @@ Demical* demicalAdd(Demical* A, size_t aAppendZeroCount, Demical* B, size_t bApp
 	return result;
 }
 
+// 大整数减法
 Demical* demicalSub(Demical* A, Demical* B)
 {
 	size_t lenA = A->digits;
@@ -137,6 +139,7 @@ Demical* demicalSub(Demical* A, Demical* B)
 	return result;
 }
 
+// 普通大整数乘法
 Demical* demicalMultiplyStandard(Demical* A, Demical* B)
 {
 	if (A->digits <= 0 || B->digits <= 0)
@@ -163,6 +166,7 @@ Demical* demicalMultiplyStandard(Demical* A, Demical* B)
 	return result;
 }
 
+// 大整数临时变量初始化
 Demical* demicalInitTemp(byte* contentStart, size_t digits)
 {
 	Demical* dec = malloc(sizeof(Demical));
@@ -171,6 +175,7 @@ Demical* demicalInitTemp(byte* contentStart, size_t digits)
 	return dec;
 }
 
+// 改进的分治大整数乘法
 Demical* demicalMultiplyDividedImproved(Demical* A, Demical* B)
 {
 	if (A->digits <= 128 || B->digits <= 128)
@@ -215,6 +220,7 @@ Demical* demicalMultiplyDividedImproved(Demical* A, Demical* B)
 	return result;
 }
 
+// 普通的分治大整数乘法
 Demical* demicalMultiplyDividedStandard(Demical* A, Demical* B)
 {
 	if (A->digits <= 128 || B->digits <= 128)
